@@ -6,11 +6,11 @@
 #    By: jchris <jchris@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 08:36:54 by jchris            #+#    #+#              #
-#    Updated: 2023/06/17 22:53:28 by jchris           ###   ########.fr        #
+#    Updated: 2023/06/18 14:02:40 by jchris           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-from pokefunc import poke_chain
+from pokefunc import pokemon_wordchain
 
-poke_chain()
+pokemon_wordchain()
