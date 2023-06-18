@@ -6,7 +6,7 @@
 #    By: jchris <jchris@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 08:37:01 by jchris            #+#    #+#              #
-#    Updated: 2023/06/17 22:53:23 by jchris           ###   ########.fr        #
+#    Updated: 2023/06/18 13:57:35 by jchris           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,13 +92,22 @@ def pokemon_wordchain() -> None:
     print(f"はじめのポケモンは「{cpu_ans}」です。")
 
     while True:
+        try:
+            start_with = read_suffix(komoji_to_omoji(cpu_ans))[-1]
 
-        start_with = read_suffix(komoji_to_omoji(cpu_ans))[-1]
-
-        S = input(
-            f"「{start_with}」からはじまるポケモンを入力してください(のこり {len({x for x in poke_ans_set if x[0] == start_with})} ひき): ")
-        cpu_ans = poke_chain(S, cpu_ans)
-        print(cpu_ans)
-
-
-pokemon_wordchain()
+            S = input(
+                f"「{start_with}」からはじまるポケモンを入力してください(のこり {len({x for x in poke_ans_set if x[0] == start_with})} ひき): ")
+            cpu_ans = poke_chain(S, cpu_ans)
+            print(cpu_ans)
+        except KeyboardInterrupt:
+            while True:
+                try:
+                    message = input("\nゲームを終了しますか? (y/n): ")
+                    if message.lower() in {"はい", "yes", "", "y"}:
+                        print("遊んでくれてありがとう! またね!")
+                        exit(0)
+                    if message.lower() in {"いいえ", "no", "n"}:
+                        print("ゲームを続行します!")
+                        break
+                except:
+                    exit(0)
