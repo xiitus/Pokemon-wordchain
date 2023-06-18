@@ -6,7 +6,7 @@
 #    By: jchris <jchris@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 08:37:01 by jchris            #+#    #+#              #
-#    Updated: 2023/06/18 13:57:35 by jchris           ###   ########.fr        #
+#    Updated: 2023/06/18 16:18:07 by jchris           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ poke_name_set: set = {'フシギダネ', 'フシギソウ', 'フシギバナ', '
                       'ディンルー', 'イーユイ', 'トドロクツキ', 'テツノブジン', 'コライドン', 'ミライドン', 'ウネルミナモ', 'テツノイサハ'}
 
 poke_ans_set: set = {x for x in poke_name_set if x[-1] != 'ン'}
+
+garbage_names = set()
 
 
 def komoji_to_omoji(komoji: str) -> str:
@@ -44,11 +46,14 @@ def read_suffix(poke_name: str) -> str:
 # print(read_suffix(komoji_to_omoji("ウソッキー")))
 
 
-def is_error(user_ans: str, cpu_ans: str) -> (str | None):
+def is_error(user_ans: str, cpu_ans: str) -> None:
+    if user_ans in garbage_names:
+        print('すでに答えられたポケモンです!')
+        print('あなたの負けです…')
+        exit(0)
+
     if not user_ans in poke_name_set:
-
         print('存在しないポケモンです!')
-
         print('あなたの負けです…')
         exit(0)
 
@@ -69,6 +74,7 @@ def poke_chain(user_ans: str, pre_cpu_ans: str) -> str:
     is_error(user_ans, pre_cpu_ans)
     poke_ans_set.remove(user_ans)
     poke_name_set.remove(user_ans)
+    garbage_names.add(user_ans)
 
     suffix = read_suffix(komoji_to_omoji(user_ans))
 
@@ -76,9 +82,11 @@ def poke_chain(user_ans: str, pre_cpu_ans: str) -> str:
         if suffix[-1] == cpu_ans[0]:
             poke_ans_set.remove(cpu_ans)
             poke_name_set.remove(cpu_ans)
+            garbage_names.add(cpu_ans)
             return cpu_ans
 
-    return '答えられるポケモンがいません…あなたの勝ちです!'
+    print('答えられるポケモンがいません…あなたの勝ちです!')
+    exit(0)
 
 
 def pokemon_wordchain() -> None:
