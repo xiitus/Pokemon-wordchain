@@ -10,6 +10,5 @@ cd Pokemon-wordchain
 python3 main.py
 ```
 
-then, you can play Pokemon-wordchain⚡️⛓
+then, you can play Pokemon-wordchain⚡️⛓\n
 wanna quit? and if so, you can press ^C(Control + C).
-
